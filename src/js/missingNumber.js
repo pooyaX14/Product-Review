@@ -38,6 +38,6 @@ function missingNum(arr, lb, ub) {
     // }else if(rightArr.length < ub){
     //   missingNum(arr, mid+1, ub)
     // }
-let items = [4, 5, 6, 8, 9, 10]
+let items = [4, 5,7]
 let missing = missingNum(items, 0, items.length-1)
 console.log(missing)

@@ -1,34 +1,46 @@
+// const t = {
+//   a: {
+//       b: (x, y) => x + y,
+//       c: (x, y) => x - y,
+//   },
+//   d: (x, y, z) => x + y + z
+// }
+
 const t = {
   a: {
-      b: (x, y) => x + y,
-      c: (x, y) => x - y,
+    b: {
+      c: (x, y) => x + y,
+      d: (x, y) => x - y,
+    },
   },
-  d: (x, y, z) => x + y + z
-}
-
-// curryFn(t)(2,3,4)
-
-o =>
-{
-  a: {
-      b: 5,
-      c: -1,
-  },
-  d: 9
+  e: (x, y, z) => x + y + z
 }
 
 function curryFn(obj) {
-  let newObj ={}
-  return function(x, y, z) {
-    for(key in obj) {
-      if obj[key] is an object
-      curryFn(obj[key])
-      else 
-      let k = obj[key]
-      newObj[key] = {b: k(x, y)}
-
-      
-    }
+  const newObj = {};
+  return function (x, y, z) {
+      for (let [key, value] of Object.entries(obj)) {
+          if (typeof(value) === "function") {
+              newObj[key] = value(x, y, z);
+          } else if (typeof(value) === "object") {
+              newObj[key] = curryFn(value)(x, y, z);
+          } else {
+              newObj[key] = value;
+          }
+      }
+      return newObj;
   }
-  return { a: { }}
 }
+const output = curryFn(obj)(2,3,4);
+console.log(output);
+
+// const o ={
+//   a: {
+//     b: {
+//       c: 5,
+//       d: -1,
+//     },
+//   },
+//   e: 9
+// }
+
